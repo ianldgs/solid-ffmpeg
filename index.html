@@ -1,24 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" mode="ios">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FS API</title>
+    <title>FFMPEG tools</title>
     <script type="importmap">
       {
         "imports": {
-          "solid-js": "https://esm.sh/solid-js@1.5.4",
-          "solid-js/": "https://esm.sh/solid-js@1.5.4/",
+          "solid-js": "https://esm.sh/solid-js@1.5.6",
+          "solid-js/": "https://esm.sh/solid-js@1.5.6/",
+          "@suid/material": "https://esm.sh/@suid/material@0.6.2",
+          "@suid/material/": "https://esm.sh/@suid/material@0.6.2/",
           "dayjs": "https://esm.sh/dayjs@1.10.7",
           "@ffmpeg/ffmpeg": "https://esm.sh/@ffmpeg/ffmpeg@0.11.5",
-          "idb-keyval": "https://esm.sh/idb-keyval@6.2.0"
+          "idb-keyval": "https://esm.sh/idb-keyval@6.2.0",
+          "path": "https://esm.sh/path-browserify@1.0.1"
         }
       }
     </script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
   </head>
   <body>
-    <div id="root"></div>
+    <ion-app id="root"></ion-app>
     <script type="module" src="./src/index.js"></script>
   </body>
 </html>

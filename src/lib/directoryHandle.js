@@ -3,9 +3,16 @@ import * as idb from "idb-keyval";
 
 export default {
   async _fromCache(id) {
-    return idb.get(`directory.${id}`).catch(() => null);
+    return idb
+      .get(`directory.${id}`)
+      .then(async (dirHandle) => {
+        await dirHandle.requestPermission({ id });
+
+        return dirHandle;
+      })
+      .catch(() => null);
   },
-  async _requestAccess(id) {
+  async _new(id) {
     return window.showDirectoryPicker({ id }).then(async (dirHandle) => {
       try {
         await idb.set(`directory.${id}`, dirHandle);
@@ -17,27 +24,29 @@ export default {
   resource(id = "default", { live = true } = {}) {
     let dirHandle;
 
+    const [hasCache, setHasCache] = createSignal();
+    idb.get(`directory.${id}`).then((cache) => setHasCache(!!cache));
+
     const [hasPermission, setHasPermission] = createSignal(false);
     const [canRequest, setCanRequest] = createSignal(false);
     const [files, { refetch }] = createResource(async () => {
+      if (!canRequest()) return;
+
       dirHandle ??= await this._fromCache(id);
-
-      if (!dirHandle && !canRequest()) {
-        setCanRequest(true);
-        return;
-      }
-
-      const names = [];
-
-      dirHandle ??= await this._requestAccess(id);
+      dirHandle ??= await this._new(id);
 
       setHasPermission(true);
 
+      const files = [];
+
       for await (const entry of dirHandle.values()) {
-        names.push(entry.name);
+        files.push(entry);
       }
 
-      return names;
+      return files;
+    });
+    onMount(() => {
+      setCanRequest(true);
     });
 
     if (live) {
@@ -53,9 +62,11 @@ export default {
     }
 
     return {
+      dirHandle: () => dirHandle,
       files,
+      hasCache,
       hasPermission,
-      request: refetch,
+      requestPermission: refetch,
     };
   },
 };
