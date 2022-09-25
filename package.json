@@ -1,0 +1,18 @@
+{
+  "name": "solid-ffmpeg",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "serve -s ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianldgs/solid-ffmpeg.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ianldgs/solid-ffmpeg/issues"
+  },
+  "homepage": "https://github.com/ianldgs/solid-ffmpeg#readme"
+}
